@@ -19,6 +19,7 @@ namespace :db do
   desc 'Drops and rebuilds db from scratch'
   task export: %w(environment) do
     def export_data
+      # Probably better ways to do inserts, such as Postgresql COPY
       Volunteer.all.map do |volunteer|
         "insert into volunteers (first_name, last_name, phone_number, insurance_carrier, medical_id), values('#{volunteer.first_name}', '#{volunteer.last_name}', '#{volunteer.phone_number}', '#{volunteer.insurance_carrier}','#{volunteer.medical_id}'"
       end.join("\n")
